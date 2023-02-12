@@ -1,0 +1,116 @@
+package main
+
+import (
+  "fmt"
+)
+
+type Node struct {
+  Val  int
+  Next *Node
+}
+
+type Stack struct {
+  Top    *Node
+  Length int
+}
+
+func (stack *Stack) Pop() int {
+  if stack.Length == 0 {
+    fmt.Println("Stack length is 0")
+    return 0
+  }
+
+  val := stack.Top.Val
+  stack.Top = stack.Top.Next
+  stack.Length--
+  return val
+}
+
+func (stack *Stack) Peek() int {
+  if stack.Length == 0 {
+    fmt.Println("Stack length is 0")
+    return 0
+  }
+
+  return stack.Top.Val
+}
+
+func (stack *Stack) Push(val int) {
+  newLastNode := &Node{Val: val}
+  newLastNode.Next = stack.Top
+  stack.Top = newLastNode
+  stack.Length++
+}
+
+func (stack *Stack) Clear() {
+  stack.Top = nil
+  stack.Length = 0
+}
+
+func (stack *Stack) Contains(val int) bool {
+  current := stack.Top
+  for current != nil {
+    if current.Val == val {
+      return true
+    }
+    current = current.Next
+  }
+  return false
+}
+
+func (stack *Stack) Increment() {
+  current := stack.Top
+  for current != nil {
+    current.Val++
+    current = current.Next
+  }
+}
+
+func (stack *Stack) Print() {
+  current := stack.Top
+  for current != nil {
+    fmt.Printf("%d ", current.Val)
+    current = current.Next
+  }
+  fmt.Println()
+}
+
+func (stack *Stack) PrintReverse() {
+  if stack.Length == 0 {
+    fmt.Println("Stack length is 0")
+    return
+  }
+
+  var arr []int
+  curr := stack.Top
+  for curr != nil {
+    arr = append(arr, curr.Val)
+    curr = curr.Next
+  }
+
+  for i := len(arr) - 1; i >= 0; i-- {
+    fmt.Printf("%d ", arr[i])
+  }
+  fmt.Println()
+}
+
+func main() {
+  stack := &Stack{}
+  stack.Push(178)
+  stack.Push(231)
+  stack.Push(453)
+  stack.Print()
+  stack.Increment()
+  stack.Print()
+  fmt.Print(stack.Contains(454))
+  stack.Clear()
+  stack.Print()
+  stack.Push(33)
+  stack.Push(34)
+  stack.Push(35)
+  stack.PrintReverse()
+}
+Myrzabekov Farkhat 
+ID: 200103486
+golang bonus task
+02N 05P
